@@ -81,6 +81,7 @@ h1 {
 
 .btn_primary:hover{
     background-color: #007bff;
+    cursor: pointer;
 }
 
 
@@ -105,3 +106,16 @@ h1::after {
     border-radius: 5px;
     max-width: 70%;
 }
+
+.input_error {
+    border-color: red;
+}
+
+.error_message {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 4px;
+}
+
+
+

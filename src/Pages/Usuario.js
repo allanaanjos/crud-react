@@ -9,15 +9,34 @@ function Usuario() {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [snackColor, setSnackColor] = useState('error');
+    const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({}); 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!nome || !email) {
-            setMessage('Nome e E-mail são Obrigatórios');
-            setOpen(true);
-            setSnackColor('error');
+        let formErrors = {};
+
+        if (!nome) {
+            formErrors.nome = 'O nome é obrigatório';
+        } else if (nome.length < 3) {
+            formErrors.nome = 'O nome deve ter pelo menos 3 caracteres';
+        }
+
+        if (!email) {
+            formErrors.email = 'O e-mail é obrigatório';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            formErrors.email = 'Formato de e-mail inválido';
+        }
+
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
             return;
         }
+
+        console.log(errors);
+
+        setErrors({});
+        setIsLoading(true);
 
         try {
             await api.post('usuario/criar', { nome, email });
@@ -31,6 +50,8 @@ function Usuario() {
             setMessage('Erro ao criar usuário');
             setOpen(true);
             setSnackColor('error');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -50,20 +71,28 @@ function Usuario() {
                     <input
                         type='text'
                         value={nome}
-                        className='form-control'
+                        className={`form-control ${errors.nome ? styles.input_error : ''}`}
                         onChange={(e) => setNome(e.target.value)}
                     />
+                    {errors.nome && <span className={styles.error_message}>{errors.nome}</span>}
                 </label>
                 <label className={styles.form_label}>
                     E-mail:
                     <input
                         type='email'
                         value={email}
-                        className='form-control'
+                        className={`form-control ${errors.email ? styles.input_error : ''}`}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                    {errors.email && <span className={styles.error_message}>{errors.email}</span>}
                 </label>
-                <button  className={styles.btn_primary}  type='submit'>Enviar</button>
+                <button
+                    className={styles.btn_primary}
+                    type='submit'
+                    disabled={isLoading || !nome || !email}
+                >
+                    {isLoading ? 'Enviando...' : 'Enviar'}
+                </button>
             </form>
             <Snackbar
                 open={open}
