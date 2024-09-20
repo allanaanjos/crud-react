@@ -49,3 +49,8 @@ input[readonly] {
 button:hover {
     background-color: #0056b3;
 }
+
+form{
+    display: flex;
+    flex-direction: column;
+}

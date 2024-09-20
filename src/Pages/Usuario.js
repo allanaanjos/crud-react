@@ -10,10 +10,9 @@ function Usuario() {
     const [message, setMessage] = useState('');
     const [snackColor, setSnackColor] = useState('error');
     const [isLoading, setIsLoading] = useState(false);
-    const [errors, setErrors] = useState({}); 
+    const [errors, setErrors] = useState({});
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const validateForm = () => {
         let formErrors = {};
 
         if (!nome) {
@@ -22,21 +21,31 @@ function Usuario() {
             formErrors.nome = 'O nome deve ter pelo menos 3 caracteres';
         }
 
+
         if (!email) {
             formErrors.email = 'O e-mail é obrigatório';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             formErrors.email = 'Formato de e-mail inválido';
         }
 
+        return formErrors;
+    };
+
+
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const formErrors = validateForm();
+
         if (Object.keys(formErrors).length > 0) {
             setErrors(formErrors);
             return;
         }
 
-        console.log(errors);
-
         setErrors({});
         setIsLoading(true);
+
 
         try {
             await api.post('usuario/criar', { nome, email });
@@ -73,6 +82,7 @@ function Usuario() {
                         value={nome}
                         className={`form-control ${errors.nome ? styles.input_error : ''}`}
                         onChange={(e) => setNome(e.target.value)}
+                        onFocus={() => setErrors((prev) => ({ ...prev, nome: undefined }))}
                     />
                     {errors.nome && <span className={styles.error_message}>{errors.nome}</span>}
                 </label>
@@ -83,6 +93,7 @@ function Usuario() {
                         value={email}
                         className={`form-control ${errors.email ? styles.input_error : ''}`}
                         onChange={(e) => setEmail(e.target.value)}
+                        onFocus={() => setErrors((prev) => ({ ...prev, email: undefined }))}
                     />
                     {errors.email && <span className={styles.error_message}>{errors.email}</span>}
                 </label>
@@ -96,7 +107,7 @@ function Usuario() {
             </form>
             <Snackbar
                 open={open}
-                autoHideDuration={6000}
+                autoHideDuration={3000}
                 onClose={handleClose}
                 message={message}
                 action={
@@ -104,6 +115,7 @@ function Usuario() {
                         Fechar
                     </Button>
                 }
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             />
         </div>
     );
