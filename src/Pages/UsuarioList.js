@@ -1,0 +1,75 @@
+import React, { useState, useEffect } from 'react';
+import api from '../Services/Api';
+import { Link } from 'react-router-dom';
+import styles from "./UsuarioList.module.css";
+
+function UsuarioList() {
+  const [usuarios, setUsuarios] = useState([]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get('/usuario');
+        setUsuarios(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`usuario/remover/${id}`);
+      setUsuarios(usuarios.filter(user => user.id !== id));
+    } catch (error) {
+      console.error('Erro ao excluir usuário: ', error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Usuários</h1>
+      <button className={styles.btn_criar}>
+        <Link className={styles.btn_link} to='/criar'>
+          <i className='fas fa-plus'></i> CRIAR
+        </Link>
+      </button>
+      <table className='table table-striped'>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NOME</th>
+            <th>E-MAIL</th>
+            <th>AÇÕES</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.isArray(usuarios) && usuarios.length > 0 ? (
+            usuarios.map(user => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.nome}</td>
+                <td>{user.email}</td>
+                <td>
+                  <Link to={`/atualizar/${user.id}`} className={styles.btn_edit}>
+                    <i className='fa fa-edit'></i>EDIT
+                  </Link>
+                  <button onClick={() => handleDelete(user.id)} className={styles.btn_delete}>
+                    <i className='fa fa-trash'></i>EXCLUIR
+                  </button>
+                </td>
+              </tr>
+            ))) : (
+            <tr>
+              <td colSpan="4">Nenhum usuário encontrado.</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default UsuarioList;

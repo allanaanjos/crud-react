@@ -1,0 +1,107 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.form_label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    width: 100%;
+    font-weight: bold;
+    color: #333;
+}
+
+.btn:focus {
+    outline: none;
+    background-color: #0056b3;
+}
+
+
+
+.form_control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+
+.form_control:focus {
+    border-color: #007bff;
+}
+
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    width: 20%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+h1 {
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    text-align: center; 
+    color: #007bff;
+    margin-bottom: 20px;
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    position: relative; 
+}
+
+.btn_primary{
+    font-size: 1em;
+    width: 45%;
+    height: 35px;
+    border: none;
+    padding: 2px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #0056b3;
+}
+
+.btn_primary:hover{
+    background-color: #007bff;
+}
+
+
+h1::after {
+    content: ''; 
+    display: block;
+    width: 50px; 
+    height: 4px; 
+    background-color: #007bff; 
+    margin: 10px auto 0; 
+    border-radius: 2px; 
+}
+
+.alert {
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    max-width: 70%;
+}
