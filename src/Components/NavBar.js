@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import './NavBar.css';
 
 function NavBar() {
@@ -10,10 +10,20 @@ function NavBar() {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                               <Link to='/' className='nav-link'>Usuários</Link>
+                                <NavLink
+                                    to='/'
+                                    className={({ isActive }) => 'nav-link' + (isActive ? ' active' : '')}
+                                >
+                                    Usuários
+                                </NavLink>
                             </li>
                             <li className="nav-item">
-                               <Link to='/criar' className='nav-link'>Cadastrar</Link>
+                                <NavLink
+                                    to='/criar'
+                                    className={({ isActive }) => 'nav-link' + (isActive ? ' active' : '')}
+                                >
+                                    Cadastrar
+                                </NavLink>
                             </li>
                         </ul>
                     </div>

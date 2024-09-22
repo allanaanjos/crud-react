@@ -2,3 +2,7 @@
     background-color: #eee9e9; 
     color: black;
 }
+
+.nav-link.active {
+    font-weight: bold;
+}

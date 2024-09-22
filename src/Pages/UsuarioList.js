@@ -57,8 +57,8 @@ function UsuarioList() {
         </Link>
       </button>
       {loading ? (
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Carregando...</span>
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Carregando...</span>
         </div>
       ) : (
         <table className='table table-striped'>
