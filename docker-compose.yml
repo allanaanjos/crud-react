@@ -1,0 +1,8 @@
+services:
+  frontend:
+    build:
+      context: .  # Diretório atual, que é C:\temp\crud-react
+    ports:
+      - "3001:80"  # Mapeia a porta 80 do contêiner para a porta 3000 da máquina host
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:4000  # URL do backend
